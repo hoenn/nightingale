@@ -1,0 +1,20 @@
+
+  <%= form_for @conn, Routes.session_path(@conn, :create), [name: :session], fn f -> %>
+  
+
+  <%= label f, :email %>
+  <%= email_input f, :email %>
+  <%= error_tag f, :email %>
+
+  <%= label f, :password %>
+  <%= password_input f, :password %>
+  <%= error_tag f, :password %>
+
+  <div>
+    <%= submit "Login", class: "btn btn-primary"%>
+  </div>
+
+  <% end %>
+  <div>
+    Don't have an account? Register <%= link "here", to: Routes.user_path(@conn, :new) %>
+  </div>
