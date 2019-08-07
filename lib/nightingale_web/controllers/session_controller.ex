@@ -2,7 +2,7 @@ defmodule NightingaleWeb.SessionController do
     use NightingaleWeb, :controller
 
     alias Nightingale.Repo
-    alias Nightingale.Accounts.{User, Auth}
+    alias Nightingale.Accounts.{Auth}
 
     def new(conn, _params) do
         render conn, "new.html"
@@ -20,5 +20,12 @@ defmodule NightingaleWeb.SessionController do
                 |> put_flash(:error, "User name or password incorrect")
                 |> render("new.html")
         end
+    end
+
+    def delete(conn, session_params) do
+        conn
+        |> delete_session(:current_user)
+        |> put_flash(:info, "Logged out")
+        |> redirect(to: "/")
     end
 end

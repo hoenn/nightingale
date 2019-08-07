@@ -9,14 +9,22 @@
       <li class="nav-item">
         <%= link "Users", to: Routes.user_path(@conn, :index), class: "nav-link" %>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
     </ul>
     <span class="my-2 my-lg-0">
-      <button class="btn btn-secondary my-2 my-sm-0" style="border-radius:0.4rem">
-        <%= link "Login", to: Routes.session_path(@conn, :new)%>
-      </button>
+      <%= if logged_in?(@conn) do %>
+        <span class="my-2 my-lg-0", style="color: white"><%= current_user(@conn).username %></span>
+        <%= link to: Routes.session_path(@conn, :delete), method: :delete do %>
+            <i class="fa fa-sign-out fa-lg my-2 my-sm-0" style="margin-left: 10px; text-decoration:none; color: white" aria-hidden="true"></i>
+        <% end %>
+       </span>
+      <% else %>
+        <%= link to: Routes.session_path(@conn, :new) do %>
+          <button class="btn btn-secondary my-2 my-sm-0" style="border-radius:0.4rem">Login</button>
+        <% end %>
+        <%= link to: Routes.user_path(@conn, :new) do %>
+          <button class="btn btn-secondary my-2 my-sm-0" style="border-radius:0.4rem">Register</button>
+        <% end %>
+      <% end %>
     </span>
   </div>
 </nav>
