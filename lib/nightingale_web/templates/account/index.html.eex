@@ -1,0 +1,31 @@
+<h1>Listing Accounts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Starting balance</th>
+      <th>Name</th>
+      <th>Owner</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for account <- @accounts do %>
+    <tr>
+      <td><%= account.starting_balance %></td>
+      <td><%= account.name %></td>
+      <td><%= account.owner %></td>
+
+
+      <td>
+        <%= link "Show", to: Routes.account_path(@conn, :show, account) %>
+        <%= link "Edit", to: Routes.account_path(@conn, :edit, account) %>
+        <%= link "Delete", to: Routes.account_path(@conn, :delete, account), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Account", to: Routes.account_path(@conn, :new) %></span>

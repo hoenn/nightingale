@@ -2,11 +2,14 @@ defmodule Nightingale.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
   alias Nightingale.Accounts.{User, Encryption}
+  alias Nightingale.Ledger.{Account}
 
   schema "users" do
     field :email, :string
     field :password_hash, :string
     field :username, :string
+
+    has_many :accounts, Nightingale.Ledger.Account
     ## Virtual fields
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
