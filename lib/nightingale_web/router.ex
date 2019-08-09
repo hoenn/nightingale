@@ -7,6 +7,7 @@ defmodule NightingaleWeb.Plugs.Auth do
   def init(default), do: default
 
   def call(conn, _opts) do
+    IO.puts("router plug")
     case logged_in?(conn) do
       true -> 
         conn
@@ -56,8 +57,9 @@ defmodule NightingaleWeb.Router do
 
     scope "/" do
       pipe_through [:login_required]
-      resources "/users", UserController
-      resources "/accounts", AccountController
+      resources "/users", UserController do
+        resources "/accounts", AccountController
+      end
     end
 
   end

@@ -19,5 +19,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.account_path(@conn, :edit, @account) %></span>
-<span><%= link "Back", to: Routes.account_path(@conn, :index) %></span>
+<span><%= link "Edit", to: Routes.user_account_path(@conn, :edit, current_user_id(@conn), @account) %></span>
+<span><%= link "Back", to: Routes.user_account_path(@conn, :index, current_user_id(@conn)) %></span>

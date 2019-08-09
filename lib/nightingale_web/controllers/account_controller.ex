@@ -28,7 +28,7 @@ defmodule NightingaleWeb.AccountController do
       {:ok, account} ->
         conn
         |> put_flash(:info, "Account created successfully.")
-        |> redirect(to: Routes.account_path(conn, :show, account))
+        |> redirect(to: Routes.user_account_path(conn, :show, curr_user, account))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -36,6 +36,7 @@ defmodule NightingaleWeb.AccountController do
   end
 
   def show(conn, %{"id" => id}, curr_user) do
+    IO.puts("show")
     account = Ledger.get_account!(id)
     render(conn, "show.html", account: account)
   end
@@ -53,7 +54,7 @@ defmodule NightingaleWeb.AccountController do
       {:ok, account} ->
         conn
         |> put_flash(:info, "Account updated successfully.")
-        |> redirect(to: Routes.account_path(conn, :show, account))
+        |> redirect(to: Routes.user_account_path(conn, :show, curr_user, account))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", account: account, changeset: changeset)
@@ -66,6 +67,6 @@ defmodule NightingaleWeb.AccountController do
 
     conn
     |> put_flash(:info, "Account deleted successfully.")
-    |> redirect(to: Routes.account_path(conn, :index))
+    |> redirect(to: Routes.user_account_path(conn, :index, curr_user))
   end
 end

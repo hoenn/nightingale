@@ -5,7 +5,7 @@ defmodule Nightingale.Repo.Migrations.CreateAccounts do
     create table(:accounts) do
       add :starting_balance, :decimal
       add :name, :string
-      add :owner, references(:users, on_delete: :nothing)
+      add :owner, references(:users, on_delete: :delete_all)
 
       timestamps()
     end

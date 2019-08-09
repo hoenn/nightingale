@@ -42,7 +42,7 @@ defmodule NightingaleWeb do
       import NightingaleWeb.ErrorHelpers
       import NightingaleWeb.Gettext
       alias NightingaleWeb.Router.Helpers, as: Routes
-      import Nightingale.Accounts.Auth, only: [current_user: 1, logged_in?: 1]
+      import Nightingale.Accounts.Auth, only: [current_user: 1, logged_in?: 1, current_user_id: 1]
     end
   end
 

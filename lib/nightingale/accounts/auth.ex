@@ -16,6 +16,16 @@ defmodule Nightingale.Accounts.Auth do
         end
     end
 
+    @doc """
+        current_user_id should only be used after users have been authenticated
+        ie: this should be user within routes that have authorization. This does
+        not substitute for checking a login and shouldn't be trusted.
+    """
+    def current_user_id(conn) do
+        id = Plug.Conn.get_session(conn, :current_user)
+        to_string(id)
+    end
+
     def current_user(conn) do
         id = Plug.Conn.get_session(conn, :current_user)
         if id do
