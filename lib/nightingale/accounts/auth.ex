@@ -1,9 +1,7 @@
 defmodule Nightingale.Accounts.Auth do
   alias Nightingale.Accounts.{User, Encryption}
 
-  def func() do
-    1
-  end
+
   def login(params, repo) do
     user = repo.get_by(User, email: String.downcase(params["email"]))
 
