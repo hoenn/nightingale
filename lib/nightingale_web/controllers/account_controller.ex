@@ -14,7 +14,7 @@ defmodule NightingaleWeb.AccountController do
     render(conn, "index.html", accounts: accounts)
   end
 
-  def new(conn, _params, curr_user) do
+  def new(conn, _params, _curr_user) do
     changeset = Ledger.change_account(%Account{})
     render(conn, "new.html", changeset: changeset)
   end
@@ -35,13 +35,13 @@ defmodule NightingaleWeb.AccountController do
     end
   end
 
-  def show(conn, %{"id" => id}, curr_user) do
+  def show(conn, %{"id" => id}, _curr_user) do
     IO.puts("show")
     account = Ledger.get_account!(id)
     render(conn, "show.html", account: account)
   end
 
-  def edit(conn, %{"id" => id}, curr_user) do
+  def edit(conn, %{"id" => id}, _curr_user) do
     account = Ledger.get_account!(id)
     changeset = Ledger.change_account(account)
     render(conn, "edit.html", account: account, changeset: changeset)

@@ -35,6 +35,7 @@ defmodule Nightingale.Accounts.User do
 
   defp downcase_email(changeset) do
     email = get_change(changeset, :email)
+
     if email do
       email_lower = String.downcase(email)
       put_change(changeset, :email, email_lower)
@@ -45,6 +46,7 @@ defmodule Nightingale.Accounts.User do
 
   defp encrypt_password(changeset) do
     password = get_change(changeset, :password)
+
     if password do
       encrypted_password = Encryption.hash_password(password)
       put_change(changeset, :password_hash, encrypted_password)

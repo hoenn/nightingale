@@ -19,7 +19,8 @@ defmodule NightingaleWeb.UserController do
       {:ok, user} ->
         conn
         |> put_flash(:info, "User created successfully.")
-        |> redirect(to: Routes.user_path(conn, :show, user)) #TODO we're going to want to redirect to the accounts :show
+        # TODO we're going to want to redirect to the accounts :show
+        |> redirect(to: Routes.user_path(conn, :show, user))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)

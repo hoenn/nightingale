@@ -6,8 +6,16 @@ defmodule Nightingale.AccountsTest do
   describe "users" do
     alias Nightingale.Accounts.User
 
-    @valid_attrs %{email: "some email", password_hash: "some password_hash", username: "some username"}
-    @update_attrs %{email: "some updated email", password_hash: "some updated password_hash", username: "some updated username"}
+    @valid_attrs %{
+      email: "some email",
+      password_hash: "some password_hash",
+      username: "some username"
+    }
+    @update_attrs %{
+      email: "some updated email",
+      password_hash: "some updated password_hash",
+      username: "some updated username"
+    }
     @invalid_attrs %{email: nil, password_hash: nil, username: nil}
 
     def user_fixture(attrs \\ %{}) do

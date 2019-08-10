@@ -1,4 +1,3 @@
-
 defmodule NightingaleWeb.Plugs.Auth do
   import Nightingale.Accounts.Auth, only: [logged_in?: 1, current_user: 1]
   import Plug.Conn
@@ -8,11 +7,13 @@ defmodule NightingaleWeb.Plugs.Auth do
 
   def call(conn, _opts) do
     IO.puts("router plug")
+
     case logged_in?(conn) do
-      true -> 
+      true ->
         conn
         |> assign(:current_user, current_user(conn))
-      _ -> 
+
+      _ ->
         conn
         |> put_flash(:error, "You must be logged in to view that page")
         |> redirect(to: "/")
@@ -21,11 +22,10 @@ defmodule NightingaleWeb.Plugs.Auth do
   end
 end
 
-#TODO: We'll want another Plug here to define ownership of accounts etc
+# TODO: We'll want another Plug here to define ownership of accounts etc
 
 defmodule NightingaleWeb.Router do
   use NightingaleWeb, :router
-
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -49,7 +49,6 @@ defmodule NightingaleWeb.Router do
     get "/", PageController, :index
     resources "/users", UserController, only: [:create, :new]
 
-
     # Sessions
     get "/login", SessionController, :new
     post "/login", SessionController, :create
@@ -57,11 +56,11 @@ defmodule NightingaleWeb.Router do
 
     scope "/" do
       pipe_through [:login_required]
+
       resources "/users", UserController do
         resources "/accounts", AccountController
       end
     end
-
   end
 
   # Other scopes may use custom stacks.

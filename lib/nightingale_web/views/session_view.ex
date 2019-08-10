@@ -1,3 +1,3 @@
 defmodule NightingaleWeb.SessionView do
-    use NightingaleWeb, :view
+  use NightingaleWeb, :view
 end

@@ -3,8 +3,16 @@ defmodule NightingaleWeb.UserControllerTest do
 
   alias Nightingale.Accounts
 
-  @create_attrs %{email: "some email", password_hash: "some password_hash", username: "some username"}
-  @update_attrs %{email: "some updated email", password_hash: "some updated password_hash", username: "some updated username"}
+  @create_attrs %{
+    email: "some email",
+    password_hash: "some password_hash",
+    username: "some username"
+  }
+  @update_attrs %{
+    email: "some updated email",
+    password_hash: "some updated password_hash",
+    username: "some updated username"
+  }
   @invalid_attrs %{email: nil, password_hash: nil, username: nil}
 
   def fixture(:user) do
@@ -75,6 +83,7 @@ defmodule NightingaleWeb.UserControllerTest do
     test "deletes chosen user", %{conn: conn, user: user} do
       conn = delete(conn, Routes.user_path(conn, :delete, user))
       assert redirected_to(conn) == Routes.user_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.user_path(conn, :show, user))
       end

@@ -7,7 +7,6 @@ defmodule Nightingale.Ledger.Account do
     field :starting_balance, :decimal
     field :owner, :id, null: false
 
-
     timestamps()
   end
 

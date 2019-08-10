@@ -54,7 +54,7 @@ defmodule Nightingale.Ledger do
 
       iex> create_account(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
-account_params
+      account_params
   """
   def create_account(attrs \\ %{}) do
     %Account{}
