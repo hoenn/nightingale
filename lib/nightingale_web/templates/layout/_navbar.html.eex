@@ -15,7 +15,7 @@
     </ul>
     <span class="my-2 my-lg-0">
       <%= if logged_in?(@conn) do %>
-        <span class="my-2 my-lg-0", style="color: white"><%= current_user(@conn).username %></span>
+        <span class="my-2 my-lg-0", style="color: white"><%= @conn.assigns.current_user.username %></span>
         <%= link to: Routes.session_path(@conn, :delete), method: :delete do %>
             <i class="fa fa-sign-out fa-lg my-2 my-sm-0" style="margin-left: 10px; text-decoration:none; color: white" aria-hidden="true"></i>
         <% end %>

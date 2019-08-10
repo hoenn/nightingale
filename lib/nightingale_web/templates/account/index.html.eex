@@ -5,7 +5,6 @@
     <tr>
       <th>Starting balance</th>
       <th>Name</th>
-      <th>Owner</th>
 
       <th></th>
     </tr>
@@ -15,7 +14,6 @@
     <tr>
       <td><%= account.starting_balance %></td>
       <td><%= account.name %></td>
-      <td><%= account.user_id %></td>
 
       <td>
         <%= link "Show", to: Routes.account_path(@conn, :show, account) %>
