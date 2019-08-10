@@ -1,12 +1,13 @@
 defmodule Nightingale.Ledger.Account do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Nightingale.Accounts.User
 
   schema "accounts" do
     field :name, :string
     field :starting_balance, :decimal
-    field :user, :id, null: false
 
+    belongs_to :user, User
     timestamps()
   end
 

@@ -56,8 +56,8 @@ defmodule NightingaleWeb.Router do
 
     scope "/" do
       pipe_through [:login_required]
-
-      resources "/users", UserController do
+      resources "/users", UserController
+      scope "/ledger" do
         resources "/accounts", AccountController
       end
     end

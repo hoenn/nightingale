@@ -1,16 +1,15 @@
 defmodule NightingaleWeb.AccountController do
+  import Plug.Conn
+
   use NightingaleWeb, :controller
 
   alias Nightingale.Ledger
   alias Nightingale.Ledger.Account
-  alias Nightingale.Accounts.Auth
 
-  def action(conn, _) do
-    apply(__MODULE__, action_name(conn), [conn, conn.params, Auth.current_user(conn).id])
-  end
+  plug :authorize_account when action in [:edit, :update, :delete]
 
-  def index(conn, _params, curr_user) do
-    accounts = Ledger.list_user_accounts(curr_user)
+  def index(conn, _params) do
+    accounts = Ledger.list_accounts()
     render(conn, "index.html", accounts: accounts)
   end
 
@@ -19,16 +18,12 @@ defmodule NightingaleWeb.AccountController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  defp withUser(acct, u) do
-    Map.put(acct, "owner", u)
-  end
-
-  def create(conn, %{"account" => account_params}, curr_user) do
-    case Ledger.create_account(withUser(account_params, curr_user)) do
+  def create(conn, %{"account" => account_params}) do
+    case Ledger.create_account(conn.assigns.current_user, account_params) do
       {:ok, account} ->
         conn
         |> put_flash(:info, "Account created successfully.")
-        |> redirect(to: Routes.user_account_path(conn, :show, curr_user, account))
+        |> redirect(to: Routes.account_path(conn, :show, account))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -41,32 +36,41 @@ defmodule NightingaleWeb.AccountController do
     render(conn, "show.html", account: account)
   end
 
-  def edit(conn, %{"id" => id}, _curr_user) do
-    account = Ledger.get_account!(id)
-    changeset = Ledger.change_account(account)
-    render(conn, "edit.html", account: account, changeset: changeset)
+  def edit(conn, _) do
+    changeset = Ledger.change_account(conn.assigns.account)
+    render(conn, "edit.html", changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "account" => account_params}, curr_user) do
-    account = Ledger.get_account!(id)
+  def update(conn, %{"account" => account_params}) do
 
-    case Ledger.update_account(account, account_params) do
+    case Ledger.update_account(conn.assigns.account, account_params) do
       {:ok, account} ->
         conn
         |> put_flash(:info, "Account updated successfully.")
-        |> redirect(to: Routes.user_account_path(conn, :show, curr_user, account))
+        |> redirect(to: Routes.account_path(conn, :show, account))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", account: account, changeset: changeset)
+        render(conn, "edit.html", changeset: changeset)
     end
   end
 
-  def delete(conn, %{"id" => id}, curr_user) do
-    account = Ledger.get_account!(id)
-    {:ok, _account} = Ledger.delete_account(account)
+  def delete(conn, _) do
+    {:ok, _account} = Ledger.delete_account(conn.assigns.account)
 
     conn
     |> put_flash(:info, "Account deleted successfully.")
-    |> redirect(to: Routes.user_account_path(conn, :index, curr_user))
+    |> redirect(to: Routes.account_path(conn, :index))
+  end
+
+  defp authorize_account(conn, _) do
+    account = Ledger.get_account!(conn.params["user_id"])
+    if conn.assigns.current_user.id == account.user_id do
+      assign(conn, :account, account)
+    else
+      conn
+      |> put_flash(:error, "NOOO")
+      |> redirect(to: Routes.account_path(conn, :index))
+      |> halt()
+    end
   end
 end

@@ -1,5 +1,6 @@
 defmodule Nightingale.Repo.Migrations.CreateUsers do
   use Ecto.Migration
+  alias Nightingale.Ledger.Account
 
   def change do
     create table(:users) do

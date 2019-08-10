@@ -7,6 +7,7 @@ defmodule Nightingale.Ledger do
   alias Nightingale.Repo
 
   alias Nightingale.Ledger.Account
+  alias Nightingale.Accounts.User
 
   @doc """
   Returns the list of accounts.
@@ -18,7 +19,9 @@ defmodule Nightingale.Ledger do
 
   """
   def list_accounts do
-    Repo.all(Account)
+    Account
+    |> Repo.all()
+    |> Repo.preload(user: [user: :id])
   end
 
   def list_user_accounts(owner) do
@@ -41,7 +44,9 @@ defmodule Nightingale.Ledger do
 
   """
   def get_account!(id) do
-    Repo.get!(Account, id)
+    Account
+    |> Repo.get(!id)
+    |> Repo.preload(user: [user: :id])
   end
 
   @doc """
@@ -56,11 +61,13 @@ defmodule Nightingale.Ledger do
       {:error, %Ecto.Changeset{}}
       account_params
   """
-  def create_account(attrs \\ %{}) do
+  def create_account(%User{} = user, attrs \\ %{}) do
     %Account{}
     |> Account.changeset(attrs)
+    |> Ecto.Changeset.put_change(:user, user.id)
     |> Repo.insert()
   end
+
 
   @doc """
   Updates a account.

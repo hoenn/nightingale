@@ -18,13 +18,13 @@
       <td><%= account.owner %></td>
 
       <td>
-        <%= link "Show", to: Routes.user_account_path(@conn, :show, current_user_id(@conn), account) %>
-        <%= link "Edit", to: Routes.user_account_path(@conn, :edit, current_user_id(@conn), account)  %>
-        <%= link "Delete", to: Routes.user_account_path(@conn, :delete, current_user_id(@conn), account), method: :delete, data: [confirm: "Are you sure?"] %>
+        <%= link "Show", to: Routes.account_path(@conn, :show, account) %>
+        <%= link "Edit", to: Routes.account_path(@conn, :edit, account)  %>
+        <%= link "Delete", to: Routes.account_path(@conn, :delete, account), method: :delete, data: [confirm: "Are you sure?"] %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<span><%= link "New Account", to: Routes.user_account_path(@conn, :new, current_user_id(@conn)) %></span>
+<span><%= link "New Account", to: Routes.account_path(@conn, :new ) %></span>
