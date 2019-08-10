@@ -14,7 +14,7 @@
 
   <li>
     <strong>Owner:</strong>
-    <%= @account.owner %>
+    <%= @account.user_id %>
   </li>
 
 </ul>

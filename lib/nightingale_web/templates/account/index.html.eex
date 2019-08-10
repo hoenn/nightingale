@@ -15,7 +15,7 @@
     <tr>
       <td><%= account.starting_balance %></td>
       <td><%= account.name %></td>
-      <td><%= account.owner %></td>
+      <td><%= account.user_id %></td>
 
       <td>
         <%= link "Show", to: Routes.account_path(@conn, :show, account) %>

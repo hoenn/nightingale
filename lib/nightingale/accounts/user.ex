@@ -10,7 +10,7 @@ defmodule Nightingale.Accounts.User do
     field :password_hash, :string
     field :username, :string
 
-    has_many :accounts, Account
+    has_many :account, Account
 
     ## Virtual fields
     field :password, :string, virtual: true

@@ -21,12 +21,13 @@ defmodule Nightingale.Ledger do
   def list_accounts do
     Account
     |> Repo.all()
-    |> Repo.preload(user: [user: :id])
+    |> Repo.preload(user: :account)
   end
 
-  def list_user_accounts(owner) do
-    from(a in Account, where: a.owner == ^owner)
+  def list_user_accounts(%User{}=user) do
+    from(a in Account, where: a.user_id == ^user.id)
     |> Repo.all()
+    |> Repo.preload(user: :account)
   end
 
   @doc """
@@ -45,8 +46,8 @@ defmodule Nightingale.Ledger do
   """
   def get_account!(id) do
     Account
-    |> Repo.get(!id)
-    |> Repo.preload(user: [user: :id])
+    |> Repo.get!(id)
+    |> Repo.preload(user: :account)
   end
 
   @doc """
@@ -64,7 +65,9 @@ defmodule Nightingale.Ledger do
   def create_account(%User{} = user, attrs \\ %{}) do
     %Account{}
     |> Account.changeset(attrs)
-    |> Ecto.Changeset.put_change(:user, user.id)
+    |> IO.inspect
+    |> Ecto.Changeset.put_change(:user_id, user.id)
+    |> IO.inspect
     |> Repo.insert()
   end
 

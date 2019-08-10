@@ -14,7 +14,7 @@ defmodule NightingaleWeb.SessionController do
         conn
         |> put_session(:current_user, user.id)
         |> put_flash(:info, "Logged in")
-        |> redirect(to: "/")
+        |> redirect(to: Routes.account_path(conn, :index))
 
       :error ->
         conn
