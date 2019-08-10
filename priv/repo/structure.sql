@@ -28,7 +28,7 @@ CREATE TABLE public.accounts (
     id bigint NOT NULL,
     starting_balance numeric,
     name character varying(255),
-    owner bigint,
+    user_id bigint NOT NULL,
     inserted_at timestamp(0) without time zone NOT NULL,
     updated_at timestamp(0) without time zone NOT NULL
 );
@@ -135,10 +135,10 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: accounts_owner_index; Type: INDEX; Schema: public; Owner: -
+-- Name: accounts_user_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX accounts_owner_index ON public.accounts USING btree (owner);
+CREATE INDEX accounts_user_id_index ON public.accounts USING btree (user_id);
 
 
 --
@@ -149,11 +149,11 @@ CREATE UNIQUE INDEX users_email_index ON public.users USING btree (email);
 
 
 --
--- Name: accounts accounts_owner_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: accounts accounts_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.accounts
-    ADD CONSTRAINT accounts_owner_fkey FOREIGN KEY (owner) REFERENCES public.users(id);
+    ADD CONSTRAINT accounts_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --
