@@ -29,7 +29,6 @@ defmodule NightingaleWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    IO.inspect(conn)
     user = Accounts.get_user!(id)
     render(conn, "show.html", user: user)
   end

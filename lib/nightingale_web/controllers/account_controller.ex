@@ -62,7 +62,6 @@ defmodule NightingaleWeb.AccountController do
   end
 
   defp authorize_account(conn, _) do
-    IO.inspect(conn.params)
     account = Ledger.get_account!(conn.params["id"])
     if conn.assigns.current_user.id == account.user_id do
       assign(conn, :account, account)
